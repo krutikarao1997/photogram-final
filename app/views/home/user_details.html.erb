@@ -65,7 +65,7 @@
 </ul>
 </p>
 
-<h3>Own photos <%= Photo.where(owner_id: current_user.id).count %></h3>
+<h3>Own photos (<%= Photo.where(owner_id: current_user.id).count %>)</h3>
 
 <table border="1">
   <tr>
@@ -138,7 +138,7 @@
 </ul>
 </p>
 
-<h3>Own photos <%= Photo.where(owner_id: @selected_user.id).count %></h3>
+<h3>Own photos (<%= Photo.where(owner_id: @selected_user.id).count %>)</h3>
 
 <table border="1">
   <tr>
@@ -216,7 +216,7 @@
 </ul>
 </p>
 
-<h3>Own photos <%= Photo.where(owner_id: @selected_user.id).count %></h3>
+<h3>Own photos (<%= Photo.where(owner_id: @selected_user.id).count %>) </h3>
 
 <table border="1">
   <tr>

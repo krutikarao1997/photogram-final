@@ -4,6 +4,38 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
   </head>
 
+ <% if current_user.present? %>
+  <body>
+  <ul>
+      <li>
+        <a href="/users">
+          All users
+        </a>
+      </li>
+
+      <li>
+        <a href="/photos">
+          All public photos
+        </a>
+      </li>
+
+        <li>
+          <a href="/users/edit">
+            <%= current_user.username %>
+          </a>
+        </li>
+
+        <li>
+          <a href="/users/sign_out">
+            Sign Out
+          </a>
+        </li>
+    </ul>
+ 
+  </body>
+
+  <% else %>
+
   <body>
     <ul>
       <li>
@@ -34,6 +66,9 @@
       <div>
         Signed out successfully.
       </div>
+ </body>
+
+  <% end %>
 
     <h1>List of users</h1>
 
@@ -61,7 +96,27 @@
             No
           <% end %>
         </td>
-        <td></td>
+        
+                
+        <td>
+        <% if current_user.present? %>
+        
+        <% follow_request = FollowRequest.find_by(sender_id: current_user.id, recipient_id: user.id) %>
+
+        <% if follow_request&.status == "accepted" %>
+          <a href="/follows/unfollow">Unfollow</a>
+        <% elsif follow_request&.status == "pending" %>
+          <a>Request Sent.</a>
+          <a href="/follows/cancel">Cancel</a>
+        <% elsif follow_request&.status == "rejected" %>
+          <a> </a>
+        <% else %>
+          <%= button_to "Follow", "/follows/send_request", method: :post %>
+        <% end %>
+
+        <% end %>       
+        </td>
+        
         <td><a href="/users/details">
             Show details
           </a></td>
@@ -70,7 +125,5 @@
 
   </table>
 
-
-  </body>
 
 </html>

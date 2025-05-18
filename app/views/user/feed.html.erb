@@ -1,0 +1,265 @@
+<ul>
+      <li>
+        <a href="/users">
+          All users
+        </a>
+      </li>
+
+      <li>
+        <a href="/photos">
+          All public photos
+        </a>
+      </li>
+
+        <li>
+          <a href="/users/edit">
+            <%= current_user.username %>
+          </a>
+        </li>
+
+        <li>
+          <a href="/users/sign_out">
+            Sign Out
+          </a>
+        </li>
+</ul>
+
+<% if @selected_userid == current_user.id %>
+
+<h1> <%= current_user.username %> </h1>
+
+<p> Private <br>
+<%= current_user.private %> </p>
+
+<p> Followers <br>
+<%= FollowRequest.where(
+  recipient_id: current_user.id,
+  status: "accepted"
+).count %> </p>
+
+<p>Pending follow requests <br>
+<% pending = FollowRequest.where(
+  recipient_id: current_user.id,
+  status: "pending"
+) %>
+<% pending.each do |each_pending| %>
+<ul> <li><%= User.find_by(:id => each_pending.sender_id).username %></li></ul>
+<%= button_to "Accept", "/follows/accept_request", method: :post %>
+<%= button_to "Reject", "/follows/reject_request", method: :post %>
+<% end %>
+</p>
+
+<p>Following <br>
+<%= FollowRequest.where(
+  sender_id: current_user.id,
+  status: "accepted"
+).count %> </p>
+</p>
+
+<p> 
+<ul>
+<li><a href = "/users/<%= current_user.username %>"> Profile </a></li>
+<li><a href = "/users/<%= current_user.username %>/liked_photos"> Liked photos </a></li>
+<li><a href = "/users/<%= current_user.username %>/feed"> Feed </a></li>
+<li><a href = "/users/<%= current_user.username %>/discover"> Discover </a></li>
+</ul>
+</p>
+
+<h3>Feed (<%= @feed_photos.count %>) </h3>
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+    <th>
+      Likes
+    </th>
+
+    <th></th>
+  </tr>
+
+  <% @feed_photos.each do |feed_photo| %>
+      <tr>
+        <td><img src="<%= feed_photo.image %>" class="img-responsive"></td>
+        <td><%= User.find_by(id: feed_photo.owner_id).username %></td>
+        <td><%= feed_photo.caption %></td>
+        <td><%= feed_photo.created_at %></td>
+        <td><%= feed_photo.likes_count %></td>
+        <td><a href = "/photos/<%= feed_photo.id %>">Show details</a></td>
+      </tr>
+  <% end %>
+</table>
+
+<!-- Following -->
+
+<% elsif @follow_requests.find_by(sender_id: current_user.id, recipient_id: @selected_userid)&.status == "accepted" %>
+
+<% @selected_user = User.find_by(id: @selected_userid) %>
+
+<h1> <%= @selected_user.username %> </h1>
+
+<p> Private <br>
+<%= @selected_user.private %> </p>
+
+<p> Followers <br>
+<%= FollowRequest.where(
+  recipient_id: @selected_user.id,
+  status: "accepted"
+).count %><br>
+<a href="/delete_follow_request/insert_number">Unfollow</a>
+</p>
+
+<p>Following <br>
+<%= FollowRequest.where(
+  sender_id: @selected_user.id,
+  status: "accepted"
+).count %> </p>
+
+<p> 
+<ul>
+<li><a href = "/users/<%= @selected_user.username %>"> Profile </a></li>
+<li><a href = "/users/<%= @selected_user.username %>/liked_photos"> Liked photos </a></li>
+<li><a href = "/users/<%= @selected_user.username %>/feed"> Feed </a></li>
+<li><a href = "/users/<%= @selected_user.username %>/discover"> Discover </a></li>
+</ul>
+</p>
+
+<h3>Feed (<%= @feed_photos.count %>) </h3>
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+    <th>
+      Likes
+    </th>
+
+    <th></th>
+  </tr>
+
+  <% @feed_photos.each do |feed_photo| %>
+      <tr>
+        <td><img src="<%= feed_photo.image %>" class="img-responsive"></td>
+        <td><%= User.find_by(id: feed_photo.owner_id).username %></td>
+        <td><%= feed_photo.caption %></td>
+        <td><%= feed_photo.created_at %></td>
+        <td><%= feed_photo.likes_count %></td>
+        <td><a href = "/photos/<%= feed_photo.id %>">Show details</a></td>
+      </tr>
+  <% end %>
+
+</table>
+
+<!-- Open Profile, not following -->
+
+<% elsif @users.find_by(id: @selected_userid).private == false %>
+
+<% @selected_user = User.find_by(id: @selected_userid) %>
+
+<h1> <%= @selected_user.username %> </h1>
+
+<p> Private <br>
+<%= @selected_user.private %> </p>
+
+<p> Followers <br>
+<%= FollowRequest.where(
+  recipient_id: @selected_user.id,
+  status: "accepted"
+).count %><br>
+    <form action="/insert_follow_request" method="post">
+      <input type="hidden" name="query_recipient_id" value="93"> <!-- update value -->
+         <button>
+         Follow
+         </button>
+    </form>
+</p>
+
+<p>Following <br>
+<%= FollowRequest.where(
+  sender_id: @selected_user.id,
+  status: "accepted"
+).count %> </p>
+
+<p> 
+<ul>
+<li><a href = "/users/<%= @selected_user.username %>"> Profile </a></li>
+<li><a href = "/users/<%= @selected_user.username %>/liked_photos"> Liked photos </a></li>
+<li><a href = "/users/<%= @selected_user.username %>/feed"> Feed </a></li>
+<li><a href = "/users/<%= @selected_user.username %>/discover"> Discover </a></li>
+</ul>
+</p>
+
+<h3>Feed (<%= @feed_photos.count %>) </h3>
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+    <th>
+      Likes
+    </th>
+
+    <th></th>
+  </tr>
+
+ <% @feed_photos.each do |feed_photo| %>
+      <tr>
+        <td><img src="<%= feed_photo.image %>" class="img-responsive"></td>
+        <td><%= User.find_by(id: feed_photo.owner_id).username %></td>
+        <td><%= feed_photo.caption %></td>
+        <td><%= feed_photo.created_at %></td>
+        <td><%= feed_photo.likes_count %></td>
+        <td><a href = "/photos/<%= feed_photo.id %>">Show details</a></td>
+      </tr>
+  <% end %>
+
+</table>
+
+
+
+<% else %>
+<p> You are not authorised for that </p>
+
+<% end %>

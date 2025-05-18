@@ -1,4 +1,3 @@
-@@ -0,0 +1,12 @@
 # == Schema Information
 #
 # Table name: likes

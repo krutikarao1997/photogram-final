@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>Photogram</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  </head>
+
+  <body>
+    <ul>
+      <li>
+        <a href="/users">
+          All users
+        </a>
+      </li>
+
+      <li>
+        <a href="/photos">
+          All public photos
+        </a>
+      </li>
+
+        <li>
+          <a href="/users/sign_in">
+            Sign in
+          </a>
+        </li>
+
+        <li>
+          <a href="/users/sign_up">
+            Sign up
+          </a>
+        </li>
+    </ul>
+
+      <div>
+        Signed out successfully.
+      </div>
+
+    <h1>List of users</h1>
+
+  <table border="1">
+    <tr>
+      <th>
+        Username
+      </th>
+
+      <th>
+        Private?
+      </th>
+
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.username %></td>
+        <td>
+        <% if user.private %>
+            Yes
+          <% else %>
+            No
+          <% end %>
+        </td>
+        <td></td>
+        <td><a href="/users/details">
+            Show details
+          </a></td>
+      </tr>
+    <% end %>
+
+  </table>
+
+
+  </body>
+
+</html>

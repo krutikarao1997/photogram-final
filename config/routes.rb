@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Route for home
+  get("/", { :controller => "home", :action => "index" }) 
+  
   # Routes for the Like resource:
 
   # CREATE
@@ -79,3 +82,4 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
+end

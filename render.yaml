@@ -18,3 +18,4 @@ databases: # this section provides some additional database configuration
   - name: db
     plan: free
     ipAllowList: []
+

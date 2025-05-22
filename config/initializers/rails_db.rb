@@ -28,3 +28,4 @@ if Object.const_defined?('RailsDb')
     # config.sandbox = false
   end
 end
+

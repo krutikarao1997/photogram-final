@@ -4,7 +4,7 @@ class HomeController < ApplicationController
       render({ :template => "home/index" })
   end
 
- def user_details
+  def user_details
     @users = User.all
     @photos = Photo.all
     @selected_username = params.fetch("name")

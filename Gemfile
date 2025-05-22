@@ -67,7 +67,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver", "~> 4.11.0"
+  gem "selenium-webdriver"
   gem "webdrivers"
 end
 
@@ -85,7 +85,6 @@ gem "sqlite3", "~> 1.4"
 gem "table_print"
 gem "simple_form"
 gem "carrierwave"
-gem "openai-chat"
 
 group :development do
   gem "annotate"
@@ -93,6 +92,7 @@ group :development do
   gem "binding_of_caller"
   gem "dev_toolbar"
   gem "draft_generators"
+  gem "grade_runner"
   gem "pry-rails"
   gem "rails_db"
   gem "rails-erd"
@@ -102,7 +102,6 @@ end
 
 group :development, :test do
   gem "rspec-rails", "~> 6.0.0"
-  gem "grade_runner", "~> 0.0.13"
 end
 
 group :test do

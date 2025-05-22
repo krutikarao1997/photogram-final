@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
   </head>
 
- <% if current_user.present? %>
+  <% if current_user.present? %>
   <body>
   <ul>
       <li>
@@ -32,8 +32,8 @@
         </li>
     </ul>
 
-   <a> Signed in successfully </a>
-
+  <a> Signed in successfully </a>
+ 
   </body>
 
   <% else %>
@@ -68,11 +68,12 @@
       <div>
         Signed out successfully.
       </div>
- </body>
+  </body>
 
   <% end %>
 
-    <h1>List of users</h1>
+
+  <h1>List of users</h1>
 
   <table border="1">
     <tr>
@@ -99,7 +100,6 @@
           <% end %>
         </td>
         
-                
         <td>
         <% if current_user.present? %>
         
@@ -119,13 +119,12 @@
         <% end %>       
         </td>
         
-          <td><a href="/users/<%= user.username %>">
+        <td><a href="/users/<%= user.username %>">
             Show details
           </a></td>
       </tr>
     <% end %>
 
   </table>
-
-
+  
 </html>

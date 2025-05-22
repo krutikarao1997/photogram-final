@@ -13,3 +13,4 @@
 #
 class Photo < ApplicationRecord
 end
+

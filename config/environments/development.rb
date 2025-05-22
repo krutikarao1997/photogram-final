@@ -86,3 +86,4 @@ Rails.application.configure do
   # Allow POST authenticity on Codespaces in dev
   config.action_controller.forgery_protection_origin_check = false
 end
+

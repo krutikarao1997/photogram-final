@@ -10,3 +10,5 @@
 #
 class Like < ApplicationRecord
 end
+
+
